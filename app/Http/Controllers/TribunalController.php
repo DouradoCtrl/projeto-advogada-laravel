@@ -21,7 +21,7 @@ class TribunalController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'sigla' => 'required|string|max:10|unique:tribunais,sigla',
-            'api_endpoint' => 'nullable|url',
+            'api_endpoint' => 'required|url',
         ]);
 
         Tribunal::create([
@@ -48,7 +48,7 @@ class TribunalController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'sigla' => 'required|string|max:10|unique:tribunais,sigla,' . $tribunal->id,
-            'api_endpoint' => 'nullable|url',
+            'api_endpoint' => 'required|url',
         ]);
 
         $tribunal->update([

@@ -17,6 +17,14 @@ class CnjApiController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        $token = CnjApiToken::findOrFail($id);
+        $token->delete();
+
+        return redirect()->route('cnjToken')->with('success', 'Token excluído com sucesso.');
+    }
+
     public function getToken(Request $request)
     {
         // Lógica para obter o token do CNJ

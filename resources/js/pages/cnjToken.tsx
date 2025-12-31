@@ -81,6 +81,7 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
                                             <Button
                                                 variant="secondary"
+                                                className="mr-2"
                                             >
                                                 Editar
                                             </Button>
@@ -101,6 +102,10 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                         <span className="font-medium">Nenhum token adicionado</span>
                     </div>
                 )}
+
+                <Button variant="default" className="self-start">
+                    Adicionar
+                </Button>
             </div>
         </AppLayout>
     );

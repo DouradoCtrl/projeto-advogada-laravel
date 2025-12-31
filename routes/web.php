@@ -26,6 +26,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('processos');
 
     Route::get('tribunais', [TribunalController::class, 'index'])->name('tribunais');
+
+    Route::post('tribunais', [TribunalController::class, 'store'])->name('tribunais.store');
     
     Route::get('cnj-token', [CnjApiController::class, 'index'])->name('cnjToken');
 

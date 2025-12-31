@@ -6,13 +6,23 @@ import { Head } from '@inertiajs/react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { router } from '@inertiajs/react';
+import Pagination from '@/components/ui/Pagination';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Tribunais',
-        href: tribunais().url,
-    },
-];
+interface Tribunal {
+    id: number;
+    nome: string;
+    sigla: string;
+    api_endpoint: string;
+    created_at: string;
+    updated_at: string;
+}
+
+interface TribunaisProps {
+    tribunais: {
+        data: Tribunal[];
+        links: { url: string | null; label: string; active: boolean }[];
+    };
+}
 
 function formatDate(dateString: string) {
     if (!dateString) return '';
@@ -27,26 +37,19 @@ function formatDate(dateString: string) {
     });
 }
 
-
-interface Tribunal {
-    id: number;
-    nome: string;
-    sigla: string;
-    api_endpoint: string;
-    created_at: string;
-    updated_at: string;
-}
-
-interface TribunaisProps {
-    tribunais: Tribunal[];
-}
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Tribunais',
+        href: tribunais().url,
+    },
+];
 
 export default function Tribunais({ tribunais }: TribunaisProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tribunais" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                {tribunais.length > 0 ? (
+                {tribunais.data.length > 0 ? (
                     <div className="overflow-x-auto">
                         <table className="min-w-full rounded-xl overflow-hidden border border-sidebar-border/70 bg-background dark:bg-background-dark">
                             <thead>
@@ -61,7 +64,7 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tribunais.map((tribunal, idx) => (
+                                {tribunais.data.map((tribunal, idx) => (
                                     <tr key={tribunal.id} className="hover:bg-accent dark:hover:bg-accent-dark">
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{idx + 1}</td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{tribunal.nome}</td>
@@ -84,7 +87,12 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                         <span className="font-medium">Nenhum tribunal cadastrado</span>
                     </div>
                 )}
-                <Button variant="default" className="self-start">Adicionar</Button>
+
+                <div className='flex justify-between items-center'>
+                    <Button variant="default" className="self-start">Adicionar</Button>
+                    <Pagination links={tribunais.links} />
+                </div>
+                
             </div>
         </AppLayout>
     );

@@ -29,4 +29,19 @@ class CnjApiController extends Controller
     {
         // Lógica para obter o token do CNJ
     }
+
+    public function store(Request $request)
+    {
+        CnjApiToken::truncate();
+
+        $request->validate([
+            'token' => 'required|string|max:255',
+        ]);
+
+        CnjApiToken::create([
+            'token' => $request->input('token'),
+        ]);
+
+        return redirect()->route('cnjToken')->with('success', 'Token adicionado com sucesso.');
+    }
 }

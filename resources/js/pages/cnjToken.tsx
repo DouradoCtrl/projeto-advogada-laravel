@@ -1,9 +1,9 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { cnjToken } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 function formatDate(dateString: string) {
     if (!dateString) return '';
@@ -58,6 +58,9 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                     <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
                                         Atualizado em
                                     </th>
+                                    <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
+                                        Ações
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,6 +77,18 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                         </td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
                                             {formatDate(token.updated_at)}
+                                        </td>
+                                        <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
+                                            <Button
+                                                variant="secondary"
+                                            >
+                                                Editar
+                                            </Button>
+                                            <Button
+                                                variant="destructive"
+                                            >
+                                                Excluir
+                                            </Button>
                                         </td>
                                     </tr>
                                 ))}

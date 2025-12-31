@@ -57,7 +57,7 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                             <thead>
                                 <tr>
                                     <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark first:rounded-tl-xl">
-                                        ID
+                                        #
                                     </th>
                                     <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
                                         Token
@@ -74,10 +74,10 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tokens.map((token) => (
+                                {tokens.map((token, idx) => (
                                     <tr key={token.id} className="hover:bg-accent dark:hover:bg-accent-dark">
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
-                                            {token.id}
+                                            {idx + 1}
                                         </td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark break-all font-mono">
                                             {token.token}

@@ -4,7 +4,12 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import InputError from '@/components/input-error';
 import { router } from '@inertiajs/react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Form } from '@inertiajs/react';
+import { useState } from 'react';
 import {
     Dialog,
     DialogClose,
@@ -47,6 +52,7 @@ interface CnjTokenProps {
 }
 
 export default function CnjToken({ tokens }: CnjTokenProps) {
+    const [addModalOpen, setAddModalOpen] = useState(false);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="CNJ Token" />
@@ -141,14 +147,75 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                         <span className="font-medium">Nenhum token adicionado</span>
                     </div>
                 )}
+                <Dialog open={addModalOpen} onOpenChange={setAddModalOpen}>
+                    <DialogTrigger asChild>
+                        <Button variant="default" className="self-start">
+                            Adicionar
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogTitle>Adicionar novo token</DialogTitle>
+                        <DialogDescription>
+                            Insira os detalhes do novo token. Assim que o novo token for adicionado o antigo será apagado automaticamente.
+                        </DialogDescription>
+                        <Form
+                            {...{ action: cnjToken().url }}
+                            method="post"
+                            resetOnSuccess
+                            className="space-y-6"
+                            onSuccess={() => setAddModalOpen(false)}
+                        >
+                            {({ resetAndClearErrors, processing, errors }) => (
+                                <>
+                                    <div className="grid gap-2">
+                                        <Label
+                                            htmlFor="token"
+                                            className="sr-only"
+                                        >
+                                            Token
+                                        </Label>
 
-                <Button 
-                    variant="default" 
-                    className="self-start"
-                    onClick={() => {/* Lógica para adicionar um novo token */}}
-                >
-                    Adicionar
-                </Button>
+                                        <Input
+                                            id="token"
+                                            type="text"
+                                            name="token"
+                                            placeholder="Token"
+                                            autoComplete="off"
+                                        />
+
+                                        <InputError message={errors.token} />
+                                    </div>
+
+                                    <DialogFooter className="gap-2">
+                                        <DialogClose asChild>
+                                            <Button
+                                                variant="secondary"
+                                                onClick={() =>
+                                                    resetAndClearErrors()
+                                                }
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </DialogClose>
+
+                                        <Button
+                                            variant="default"
+                                            disabled={processing}
+                                            asChild
+                                        >
+                                            <button
+                                                type="submit"
+                                                data-test="confirm-delete-user-button"
+                                            >
+                                                Adicionar Token
+                                            </button>
+                                        </Button>
+                                    </DialogFooter>
+                                </>
+                            )}
+                        </Form>
+                    </DialogContent>
+                </Dialog>
             </div>
         </AppLayout>
     );

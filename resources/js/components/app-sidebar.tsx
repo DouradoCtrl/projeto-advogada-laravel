@@ -10,7 +10,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard, clientes, processos, tribunais } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, Users, Gavel, FileText } from 'lucide-react';
@@ -24,17 +24,17 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Clientes',
-        href: dashboard(),
+        href: clientes(),
         icon: Users,
     },
     {
         title: 'Processos',
-        href: dashboard(),
+        href: processos(),
         icon: FileText,
     },
     {
         title: 'Tribunais',
-        href: dashboard(),
+        href: tribunais(),
         icon: Gavel,
     },
 ];

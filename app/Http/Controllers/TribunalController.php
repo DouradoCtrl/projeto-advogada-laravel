@@ -32,4 +32,12 @@ class TribunalController extends Controller
 
         return redirect()->route('tribunais')->with('success', 'Tribunal adicionado com sucesso.');
     }
+
+    public function destroy($id)
+    {
+        $tribunal = Tribunal::findOrFail($id);
+        $tribunal->delete();
+
+        return redirect()->route('tribunais')->with('success', 'Tribunal excluído com sucesso.');
+    }
 }

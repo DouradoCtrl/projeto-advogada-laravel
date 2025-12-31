@@ -80,16 +80,11 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{formatDate(tribunal.updated_at || '')}</td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
                                             <Button variant="secondary" className="mr-2">Editar</Button>
-                                            <DeleteModalTribunal 
-                                                open={deleteModalOpen} 
-                                                onOpenChange={setDeleteModalOpen}
-                                                tribunal={selectedTribunal} 
-                                            />
                                             <Button 
                                                 variant="destructive" 
                                                 onClick={() => { 
+                                                    setSelectedTribunal(tribunal);
                                                     setDeleteModalOpen(true);
-                                                    setSelectedTribunal(tribunal.id);
                                                 }}>Excluir    
                                             </Button>
                                         </td>
@@ -112,7 +107,13 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                     </Button>
                     <Pagination links={tribunais.links} />
                 </div>
-                
+
+                {/* para renderiza o modal fora do loop */}
+                <DeleteModalTribunal 
+                    open={deleteModalOpen} 
+                    onOpenChange={setDeleteModalOpen}
+                    tribunal={selectedTribunal} 
+                />
             </div>
         </AppLayout>
     );

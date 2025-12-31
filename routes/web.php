@@ -26,6 +26,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('tribunais', function () {
         return Inertia::render('tribunais');
     })->name('tribunais');
+
+    Route::get('cnjToken', function () {
+        return Inertia::render('cnjToken');
+    })->name('cnjToken');
 });
 
 require __DIR__.'/settings.php';

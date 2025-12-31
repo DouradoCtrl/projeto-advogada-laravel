@@ -53,6 +53,7 @@ interface CnjTokenProps {
 
 export default function CnjToken({ tokens }: CnjTokenProps) {
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="CNJ Token" />
@@ -95,18 +96,90 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                             {formatDate(token.updated_at)}
                                         </td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
-                                            <Button
-                                                variant="secondary"
-                                                className="mr-2"
-                                                onClick={() => {/* Lógica para editar o token */}}
-                                            >
-                                                Editar
-                                            </Button>
+                                            <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        variant="secondary"
+                                                        className="mr-2"
+                                                    >
+                                                        Editar
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogTitle>
+                                                        Editar Token
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        Tem certeza de que deseja editar este token?
+                                                    </DialogDescription>
+                                                    <Form
+                                                        {...{ action: cnjToken().url }}
+                                                        method="put"
+                                                        resetOnSuccess
+                                                        className="space-y-6"
+                                                        onSuccess={() => setEditModalOpen(false)}
+                                                    >
+                                                        {({ resetAndClearErrors, processing, errors }) => (
+                                                            <>
+                                                                <div className="grid gap-2">
+                                                                    <Label
+                                                                        htmlFor="token"
+                                                                        className="sr-only"
+                                                                    >
+                                                                        Token
+                                                                    </Label>
+
+                                                                    <Input
+                                                                        id="id"
+                                                                        name="id"
+                                                                        type="hidden"
+                                                                        value={token.id}
+                                                                    />
+
+                                                                    <Input
+                                                                        id="token"
+                                                                        type="text"
+                                                                        name="token"
+                                                                        placeholder="Token"
+                                                                        defaultValue={token.token}
+                                                                    />
+
+                                                                    <InputError message={errors.token} />
+                                                                </div>
+
+                                                                <DialogFooter className="gap-2">
+                                                                    <DialogClose asChild>
+                                                                        <Button
+                                                                            variant="secondary"
+                                                                            onClick={() =>
+                                                                                resetAndClearErrors()
+                                                                            }
+                                                                        >
+                                                                            Cancelar
+                                                                        </Button>
+                                                                    </DialogClose>
+
+                                                                    <Button
+                                                                        variant="default"
+                                                                        disabled={processing}
+                                                                        asChild
+                                                                    >
+                                                                        <button
+                                                                            type="submit"
+                                                                        >
+                                                                            Editar Token
+                                                                        </button>
+                                                                    </Button>
+                                                                </DialogFooter>
+                                                            </>
+                                                        )}
+                                                    </Form>
+                                                </DialogContent>
+                                            </Dialog>
                                             <Dialog>
                                                 <DialogTrigger asChild>
                                                     <Button
                                                         variant="destructive"
-                                                        onClick={() => {/* Lógica para excluir o token */}}
                                                     >
                                                         Excluir
                                                     </Button>

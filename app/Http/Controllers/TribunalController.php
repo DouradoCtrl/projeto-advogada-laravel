@@ -40,4 +40,23 @@ class TribunalController extends Controller
 
         return redirect()->route('tribunais')->with('success', 'Tribunal excluído com sucesso.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $tribunal = Tribunal::findOrFail($id);
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'sigla' => 'required|string|max:10|unique:tribunais,sigla,' . $tribunal->id,
+            'api_endpoint' => 'nullable|url',
+        ]);
+
+        $tribunal->update([
+            'nome' => $request->nome,
+            'sigla' => $request->sigla,
+            'api_endpoint' => $request->api_endpoint,
+        ]);
+
+        return redirect()->route('tribunais')->with('success', 'Tribunal atualizado com sucesso.');
+    }
 }

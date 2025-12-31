@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { router } from '@inertiajs/react';
 import Pagination from '@/components/ui/Pagination';
 import AddModalTribunal from '@/components/tribunais/AddModalTribunal';
+import DeleteModalTribunal from '@/components/tribunais/DeleteModalTribunal';
 import { useState } from 'react';
 
 interface Tribunal {
@@ -48,6 +49,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Tribunais({ tribunais }: TribunaisProps) {
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedTribunal, setSelectedTribunal] = useState<number | null>(null);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tribunais" />
@@ -77,7 +80,18 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{formatDate(tribunal.updated_at || '')}</td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
                                             <Button variant="secondary" className="mr-2">Editar</Button>
-                                            <Button variant="destructive" onClick={() => router.delete(`/tribunais/${tribunal.id}`)}>Excluir</Button>
+                                            <DeleteModalTribunal 
+                                                open={deleteModalOpen} 
+                                                onOpenChange={setDeleteModalOpen}
+                                                tribunal={selectedTribunal} 
+                                            />
+                                            <Button 
+                                                variant="destructive" 
+                                                onClick={() => { 
+                                                    setDeleteModalOpen(true);
+                                                    setSelectedTribunal(tribunal.id);
+                                                }}>Excluir    
+                                            </Button>
                                         </td>
                                     </tr>
                                 ))}

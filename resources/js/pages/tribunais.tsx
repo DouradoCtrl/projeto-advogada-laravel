@@ -7,6 +7,8 @@ import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { router } from '@inertiajs/react';
 import Pagination from '@/components/ui/Pagination';
+import AddModalTribunal from '@/components/tribunais/AddModalTribunal';
+import { useState } from 'react';
 
 interface Tribunal {
     id: number;
@@ -45,6 +47,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Tribunais({ tribunais }: TribunaisProps) {
+    const [addModalOpen, setAddModalOpen] = useState(false);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tribunais" />
@@ -89,7 +92,10 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                 )}
 
                 <div className='flex justify-between items-center'>
-                    <Button variant="default" className="self-start">Adicionar</Button>
+                    <AddModalTribunal open={addModalOpen} onOpenChange={setAddModalOpen} />
+                    <Button variant="default" className="self-start" onClick={() => setAddModalOpen(true)}>
+                        Adicionar
+                    </Button>
                     <Pagination links={tribunais.links} />
                 </div>
                 

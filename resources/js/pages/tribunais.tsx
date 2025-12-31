@@ -9,7 +9,9 @@ import { router } from '@inertiajs/react';
 import Pagination from '@/components/ui/Pagination';
 import AddModalTribunal from '@/components/tribunais/AddModalTribunal';
 import DeleteModalTribunal from '@/components/tribunais/DeleteModalTribunal';
+import EditModalTribunal from '@/components/tribunais/EditModalTribunal';
 import { useState } from 'react';
+import { edit } from '@/routes/appearance';
 
 interface Tribunal {
     id: number;
@@ -51,6 +53,7 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
     const [addModalOpen, setAddModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [selectedTribunal, setSelectedTribunal] = useState<number | null>(null);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tribunais" />
@@ -79,7 +82,13 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{formatDate(tribunal.created_at || '')}</td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">{formatDate(tribunal.updated_at || '')}</td>
                                         <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
-                                            <Button variant="secondary" className="mr-2">Editar</Button>
+                                            <Button 
+                                                variant="secondary" 
+                                                className="mr-2" 
+                                                onClick={() => {
+                                                    setSelectedTribunal(tribunal);
+                                                    setEditModalOpen(true);
+                                            }}>Editar</Button>
                                             <Button 
                                                 variant="destructive" 
                                                 onClick={() => { 
@@ -112,6 +121,13 @@ export default function Tribunais({ tribunais }: TribunaisProps) {
                 <DeleteModalTribunal 
                     open={deleteModalOpen} 
                     onOpenChange={setDeleteModalOpen}
+                    tribunal={selectedTribunal} 
+                />
+
+                {/* para rendizar o modal de editar fora do loop */}
+                <EditModalTribunal 
+                    open={editModalOpen} 
+                    onOpenChange={setEditModalOpen}
                     tribunal={selectedTribunal} 
                 />
             </div>

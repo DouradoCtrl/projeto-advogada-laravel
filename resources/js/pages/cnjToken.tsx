@@ -3,6 +3,20 @@ import AppLayout from '@/layouts/app-layout';
 import { cnjToken } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
+import { Info } from 'lucide-react';
+
+function formatDate(dateString: string) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    });
+}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,25 +25,67 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function CnjToken() {
+interface Token {
+    id: number;
+    token: string;
+    created_at: string;
+    updated_at: string;
+}
+
+interface CnjTokenProps {
+    tokens: Token[];
+}
+
+export default function CnjToken({ tokens }: CnjTokenProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="CNJ Token" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                {tokens.length > 0 ? (
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full rounded-xl overflow-hidden border border-sidebar-border/70 bg-background dark:bg-background-dark">
+                            <thead>
+                                <tr>
+                                    <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark first:rounded-tl-xl">
+                                        ID
+                                    </th>
+                                    <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
+                                        Token
+                                    </th>
+                                    <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
+                                        Criado em
+                                    </th>
+                                    <th className="px-4 py-2 border-b border-sidebar-border/70 text-left font-bold bg-muted dark:bg-muted-dark">
+                                        Atualizado em
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tokens.map((token) => (
+                                    <tr key={token.id} className="hover:bg-accent dark:hover:bg-accent-dark">
+                                        <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
+                                            {token.id}
+                                        </td>
+                                        <td className="px-4 py-2 border-b border-muted dark:border-muted-dark break-all font-mono">
+                                            {token.token}
+                                        </td>
+                                        <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
+                                            {formatDate(token.created_at)}
+                                        </td>
+                                        <td className="px-4 py-2 border-b border-muted dark:border-muted-dark">
+                                            {formatDate(token.updated_at)}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                ) : (
+                    <div className="max-w-xl w-full flex items-center gap-3 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-100 rounded-lg p-4 mx-auto">
+                        <Info className="w-6 h-6 flex-shrink-0 text-blue-500 dark:text-blue-300" />
+                        <span className="font-medium">Nenhum token adicionado</span>
                     </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+                )}
             </div>
         </AppLayout>
     );

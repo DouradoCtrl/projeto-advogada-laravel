@@ -44,4 +44,19 @@ class CnjApiController extends Controller
 
         return redirect()->route('cnjToken')->with('success', 'Token adicionado com sucesso.');
     }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string|max:255',
+        ]);
+
+        $token = CnjApiToken::find($request->input('id'));
+        
+        $token->update([
+            'token' => $request->input('token'),
+        ]);
+
+        return redirect()->route('cnjToken')->with('success', 'Token atualizado com sucesso.');
+    }
 }

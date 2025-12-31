@@ -15,6 +15,7 @@ export default function AddModalTribunal({ open, onOpenChange }) {
                     </DialogDescription>
                     <Form
                         method="post"
+                        action="/tribunais"
                         resetOnSuccess
                         className="space-y-6"
                         onSuccess={() => onOpenChange(false)}

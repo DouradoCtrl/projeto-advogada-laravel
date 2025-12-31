@@ -4,6 +4,16 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { router } from '@inertiajs/react';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 
 function formatDate(dateString: string) {
     if (!dateString) return '';
@@ -82,14 +92,43 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                                             <Button
                                                 variant="secondary"
                                                 className="mr-2"
+                                                onClick={() => {/* Lógica para editar o token */}}
                                             >
                                                 Editar
                                             </Button>
-                                            <Button
-                                                variant="destructive"
-                                            >
-                                                Excluir
-                                            </Button>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        variant="destructive"
+                                                        onClick={() => {/* Lógica para excluir o token */}}
+                                                    >
+                                                        Excluir
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogTitle>
+                                                        Confirmar exclusão
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        Tem certeza de que deseja excluir este token? Esta ação não pode ser desfeita.
+                                                    </DialogDescription>
+                                                    <DialogFooter>
+                                                        <DialogClose asChild>
+                                                            <Button variant="secondary">
+                                                                Cancelar
+                                                            </Button>
+                                                        </DialogClose>
+                                                        <Button
+                                                            variant="destructive"
+                                                            onClick={() => {
+                                                                router.delete(`/cnj-token/${token.id}`);
+                                                            }}
+                                                        >
+                                                            Excluir
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </DialogContent>
+                                            </Dialog>
                                         </td>
                                     </tr>
                                 ))}
@@ -97,13 +136,17 @@ export default function CnjToken({ tokens }: CnjTokenProps) {
                         </table>
                     </div>
                 ) : (
-                    <div className="max-w-xl w-full flex items-center gap-3 bg-blue-50 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-100 rounded-lg p-4 mx-auto">
-                        <Info className="w-6 h-6 flex-shrink-0 text-blue-500 dark:text-blue-300" />
+                    <div className="w-full flex items-center gap-3 bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-100 rounded-lg p-4 mx-auto">
+                        <Info className="w-6 h-6 flex-shrink-0 text-red-500 dark:text-red-300" />
                         <span className="font-medium">Nenhum token adicionado</span>
                     </div>
                 )}
 
-                <Button variant="default" className="self-start">
+                <Button 
+                    variant="default" 
+                    className="self-start"
+                    onClick={() => {/* Lógica para adicionar um novo token */}}
+                >
                     Adicionar
                 </Button>
             </div>

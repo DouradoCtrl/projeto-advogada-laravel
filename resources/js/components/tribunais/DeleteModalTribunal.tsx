@@ -10,7 +10,7 @@ export default function DeleteModalTribunal({ open, onOpenChange, tribunal }) {
             <DialogContent>
                 <DialogTitle>Confirmar exclusão</DialogTitle>
                 <DialogDescription>
-                    Tem certeza que deseja excluir o tribunal <b>{tribunal.nome}</b>?
+                    Tem certeza que deseja excluir o <b>{tribunal.nome}</b>?
                 </DialogDescription>
                 <DialogFooter>
                     <DialogClose asChild>

@@ -30,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('tribunais', [TribunalController::class, 'store'])->name('tribunais.store');
 
     Route::delete('tribunais/{id}', [TribunalController::class, 'destroy'])->name('tribunais.destroy');
+
+    Route::put('tribunais/{id}', [TribunalController::class, 'update'])->name('tribunais.update');
     
     Route::get('cnj-token', [CnjApiController::class, 'index'])->name('cnjToken');
 

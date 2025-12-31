@@ -28,7 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('tribunais');
     })->name('tribunais');
     
-    Route::get('cnjToken', [CnjApiController::class, 'index'])->name('cnjToken');
+    Route::get('cnj-token', [CnjApiController::class, 'index'])->name('cnjToken');
+
+    Route::delete('/cnj-token/{id}', [CnjApiController::class, 'destroy'])->name('cnj-token.destroy');
 });
 
 require __DIR__.'/settings.php';

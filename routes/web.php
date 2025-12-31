@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\CnjApiController;
+use App\Http\Controllers\TribunalController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -24,9 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('processos');
     })->name('processos');
 
-    Route::get('tribunais', function () {
-        return Inertia::render('tribunais');
-    })->name('tribunais');
+    Route::get('tribunais', [TribunalController::class, 'index'])->name('tribunais');
     
     Route::get('cnj-token', [CnjApiController::class, 'index'])->name('cnjToken');
 

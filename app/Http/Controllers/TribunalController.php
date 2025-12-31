@@ -10,7 +10,7 @@ class TribunalController extends Controller
 {
     public function index()
     {
-        $tribunais = Tribunal::paginate(15);
+        $tribunais = Tribunal::all();
         return Inertia::render('tribunais', [
             'tribunais' => $tribunais,
         ]);

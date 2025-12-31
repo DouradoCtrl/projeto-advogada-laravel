@@ -10,10 +10,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, clientes, processos, tribunais } from '@/routes';
+import { dashboard, clientes, processos, tribunais, cnjToken } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Users, Gavel, FileText } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Users, Gavel, FileText, Key } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -36,6 +36,11 @@ const mainNavItems: NavItem[] = [
         title: 'Tribunais',
         href: tribunais(),
         icon: Gavel,
+    },
+    {
+        title: 'CNJ Token',
+        href: cnjToken(),
+        icon: Key,
     },
 ];
 

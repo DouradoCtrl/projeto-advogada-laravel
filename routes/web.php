@@ -33,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/cnj-token/{id}', [CnjApiController::class, 'destroy'])->name('cnj-token.destroy');
 
     Route::post('/cnj-token', [CnjApiController::class, 'store'])->name('cnj-token.store');
+
+    Route::put('/cnj-token', [CnjApiController::class, 'update'])->name('cnj-token.update');
 });
 
 require __DIR__.'/settings.php';
